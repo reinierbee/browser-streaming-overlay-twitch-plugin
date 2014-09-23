@@ -1,5 +1,4 @@
 .idea
 *.iml
-composer.phar
 install/vendor
 install/composer.lock
