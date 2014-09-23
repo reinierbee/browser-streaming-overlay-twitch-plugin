@@ -6,6 +6,6 @@
  * Time: 23:31
  */
 
-require 'install/vendor/autoload.php';
+require 'vendor/autoload.php';
 
 

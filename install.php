@@ -8,7 +8,6 @@
 
 print_r("Starting installation... \n\n");
 
-passthru("php ../composer.phar install",$output);
-passthru("php ../composer.phar update",$output);
+passthru("php composer.phar install");
+passthru("php composer.phar update");
 
-print_r($output);
