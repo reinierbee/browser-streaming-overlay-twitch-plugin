@@ -1,0 +1,35 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/reinierbee/easy-twitch-javascript-api"
+        }
+    ],
+    "name": "reinierbee/obs-browser-overlay",
+    "description": "Open broadcaster overlay CLR browser source plugin compatible",
+    "type": "project",
+    "keywords": ["OBS","javascript"],
+    "homepage": "https://github.com/reinierbee/browser-streaming-overlay-twitch-plugin",
+    "license": "GPL-2.0",
+    "require": {
+        "php": ">=5.3.0",
+        "reinierbee/easy-twitch-api-javascript": "dev-master",
+        "phergie/phergie-irc-generator": "dev-master",
+        "phergie/phergie-irc-parser": "dev-master",
+        "phergie/phergie-irc-connection": "dev-master",
+        "phergie/phergie-irc-client-react": "dev-master",
+        "phergie/phergie-irc-event": "dev-master",
+        "phergie/phergie-irc-bot-react": "dev-master",
+        "phergie/phergie-irc-plugin-react-command": "dev-master",
+        "phergie/phergie-irc-plugin-react-pong": "dev-master",
+        "phergie/phergie-irc-plugin-react-autojoin": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Reinier Boon",
+            "email": "ssjkrillen@hotmail.com",
+            "homepage": "http://www.reinierboon.com",
+            "role": "Developer"
+        }
+    ]
+}
