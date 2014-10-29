@@ -24,6 +24,15 @@ return array(
         'channels' => array('#megamestahd'),
         //'keys' => array('key1', 'key2', 'keyN'),
 
+        )),
+        new \Phergie\Irc\Plugin\React\Db\Plugin(array(
+            'database' => array(
+                'dbname' => 'phergie-db',
+                'user' => 'root',
+                'password' => '',
+                'host' => 'localhost',
+                'driver' => 'pdo_mysql',
+            )
         ))
     )
 );
