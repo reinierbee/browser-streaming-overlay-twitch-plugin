@@ -8,7 +8,7 @@
 
 
 use Phergie\Irc\Connection;
-return array(
+$config = array(
     'connections' => array(
         new Connection(array(
             'serverHostname' => 'irc.twitch.tv',
@@ -25,20 +25,12 @@ return array(
         //'keys' => array('key1', 'key2', 'keyN'),
 
         )),
-        new \Phergie\Irc\Plugin\React\Db\Plugin(array(
-            'database' => array(
-                'dbname' => 'phergie-db',
-                'user' => 'root',
-                'password' => '',
-                'host' => 'localhost',
-                'driver' => 'pdo_mysql',
-            )
-        ))
+        new \Phergie\Irc\Plugin\React\Db\Plugin(include("config-database.php"))
     )
 );
 
-
-
+var_dump($config);
+return $config;
 //return array(
 //    // One array per connection, pretty self-explanatory
 //    'connections' => array(

@@ -11,14 +11,11 @@ namespace Module\Chat;
 
 class Client {
 
-    protected $username;
-    protected $color;
+    public $clientName;
+    public $color;
 
     public function __construct(array $config = array())
     {
-        return array(
-            'username' => 'dummy',
-            'color' => '#000000'
-        );
+        $this->color = '#000000';
     }
 } 

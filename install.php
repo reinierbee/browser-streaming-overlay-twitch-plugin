@@ -8,6 +8,7 @@
 
 print_r("Starting installation... \n\n");
 
+passthru("php composer.phar self-update");
 passthru("php composer.phar install");
 passthru("php composer.phar update");
 

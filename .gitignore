@@ -2,3 +2,5 @@
 *.iml
 vendor
 composer.lock
+module/log/*.log
+web/js/config.js

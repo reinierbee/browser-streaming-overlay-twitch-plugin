@@ -1,0 +1,5 @@
+myConfig = {
+    "clientId":"",
+    "channel":"",
+    "redirectUrl":""
+}
