@@ -22,8 +22,11 @@
         <script src="js/config.js"></script>
 		<script src="api/v3/twitch-api.js"></script>
         <script src="api/v3/twitch-app.js"></script>
+        <script src="../module/chat/api/v1/api.js"></script>
+        <script src="../module/chat/api/v1/app.js"></script>
 		<script src="js/site.js"></script>
         <script src="js/site-test.js"></script>
+        <script src="api/v3/twitch-app.js"></script>
 	</head>
 	<body>
 		<div id="main">
@@ -34,7 +37,13 @@
                 <ul id="recentFollowers">
                 </ul>
             </div>
-            <div id="chat"></div>
+            <div id="chat">
+                <div class="headline">
+                    <span>Chat</span>
+                </div>
+                <ul id="chatMessages">
+                </ul>
+            </div>
             <div id="mostRecentFollowerPopUp"></div>
             <div id="mostRecentSubscriberPopUp"></div>
 		</div>

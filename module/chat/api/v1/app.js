@@ -7,25 +7,21 @@
  * https://creativecommons.org/licenses/by-nc/3.0/
  */
 
-function TwitchApp () {
+function ChatApp () {
 
-    var twitch = new TwitchApi();
-    var app = this
+    var chat = new ChatApi();
+    var app = this;
     var config  = {};
-    var followers = [];
 
     this.constructor = function () {
         config = {
-            follower : {
+            chat : {
                 loaded:false,
                 callback:'',
-                pollTime:2000
+                pollTime:500
             }
         };
-        twitch.setConfig("clientId",myConfig.clientId);
-        twitch.setConfig("channel",myConfig.channel);
-        twitch.setConfig("redirectUrl",myConfig.redirectUrl);
-        twitch.initializeAuth();
+        chat.setConfig("channel",myConfig.channel);
     };
 
     this.constructor();
@@ -46,33 +42,37 @@ function TwitchApp () {
      *  Subscriber stuff
      */
 
-    this.newSubscriberAction = function (newSub,callback) {
-        callback(newSub)
+    this.chatAction = function (message,callback) {
+        config.chat.lastMessageId = message[0].id;
+        callback(message)
     };
 
-
-    /*
-     *  Followers stuff
-     */
-    this.pollFollowers = function () {
+    this.pollChat = function () {
         setTimeout(function() {
-            twitch.getChannelsFollows(app.getNewFollowers);
-            app.pollFollowers();
-        }, config.follower.pollTime);
+            app.getNewMessages();
+            app.pollChat();
+        }, config.chat.pollTime);
     };
 
-    this.addNewFollower = function (newFollower) {
-        followers.unshift(newFollower)
-        if(config.follower.loaded == true && config.follower.callback !== ''){
-            app.newFollowerAction(newFollower,config.follower.callback)
+
+    this.getNewMessages = function () {
+        chat.getMessagesNew(app.addMessages,config.channel);
+        config.chat.loaded = true;
+    };
+
+
+    this.addMessages = function (message) {
+        if(message.length !== 0) {
+            console.log(message);
+            if(config.chat.loaded == true && config.chat.callback !== ''){
+                app.chatAction(message,config.chat.callback)
+            }
+        } else {
+            console.log('No new messages');
         }
     };
-
-    this.newFollowerAction = function (newFollower,callback) {
-        callback(newFollower)
-    };
-
-    this.getNewFollowers = function (newFollowList) {
+/*
+    this.getNewMessages = function () {
         newFollowList.follows = newFollowList.follows.reverse()
         for (key in newFollowList.follows) {
             entry = newFollowList.follows[key]
@@ -88,22 +88,8 @@ function TwitchApp () {
         }
         config.follower.loaded = true;
     };
-
-    this.followerInList = function(followerId){
-        for (i in followers) {
-            if (followers[i].user._id == followerId) {
-                return true;
-            }
-        }
-        return false;
-    };
-
+*/
     this.getRecentFollowers = function () {
         return followers;
     };
-
-    this.playMusic = function(music){
-        $("#audio").remove()
-        $(document.body).append('<embed id="audio" src="'+ music +'" autostart="true" loop="false" width="2" height="0">');
-    }
 }

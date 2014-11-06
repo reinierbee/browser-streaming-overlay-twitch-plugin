@@ -15,7 +15,7 @@ $config = array(
             'username' => 'MegamestaHD',
             'realname' => 'MegamestaHD',
             'nickname' => 'MegamestaHD',
-            'password' => 'oauth:nlghs1dvo7chnpf1bvs8x1r8gput6n8'
+            'password' => ''
         ))
     ),
     'plugins' => array(
@@ -25,7 +25,8 @@ $config = array(
         //'keys' => array('key1', 'key2', 'keyN'),
 
         )),
-        new \Phergie\Irc\Plugin\React\Db\Plugin(include("config-database.php"))
+        new \Phergie\Irc\Plugin\React\Db\Plugin(include("config-database.php")),
+        new \Phergie\Irc\Plugin\React\Pong\Plugin()
     )
 );
 

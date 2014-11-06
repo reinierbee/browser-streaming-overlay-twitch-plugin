@@ -21,6 +21,34 @@ body {
     /*border: 1px dotted #f00;*/
 }
 
+/* Chat */
+#chat {
+    width: 360px;
+    background-color: #fcd987;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+#chatMessages{
+    margin:0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    overflow: hidden;
+}
+#chatMessages li{
+    /*height: 16px;*/
+    line-height: 16px;
+    font-size: 12px;
+    text-indent: 10px;
+}
+#chatMessages li:nth-child(odd){
+    background-color:#f9aa5d;
+}
+
+
+/* Followers*/
 #followers {
     width: 180px;
     background-color: #fcd987;

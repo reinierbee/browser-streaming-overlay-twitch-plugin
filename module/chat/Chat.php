@@ -19,6 +19,7 @@ class Chat extends Message {
     public $limit = 100; // limit the maximum amount of returned messages prevent overloading your system
     protected $log;
     protected $config = array();
+    public $session;
 
     public function __construct(array $config = array())
     {
@@ -44,7 +45,7 @@ class Chat extends Message {
             ->select('*')
             ->from('event_PRIVMSG','')
             ->where("target = :target")
-            ->orderBy('id','DESC')
+            ->orderBy('id','ASC')
             ->setFirstResult($limit[0])
             ->setMaxResults($limit[1])
         ;
@@ -66,13 +67,15 @@ class Chat extends Message {
             $message = new Message();
             $message->message = $value['message'];
             $message->target = $value['target'];
-            $message->client->clientName = "MEgaaasss";
+            $message->id = $value['id'];
+            $message->nick->nickname = $value['nick'];
             $newMessages[] = $message;
         }
         return $newMessages;
     }
 
     public function getRecentMessages($target,$id){
+        $limit = $this->getLimit();
 
         $queryBuilder = $this->db->createQueryBuilder();
         $queryBuilder
@@ -80,6 +83,9 @@ class Chat extends Message {
             ->from('event_PRIVMSG','')
             ->where("target = :target")
             ->andWhere('id > :id')
+            ->orderBy('id','ASC')
+            ->setFirstResult($limit[0])
+            ->setMaxResults($limit[1])
             ->setParameters(array(
                 'id' => $id
             ));
@@ -90,10 +96,19 @@ class Chat extends Message {
         $stmt->execute();
 
         $this->log->addInfo("Executing query: $queryBuilder");
-        return $stmt->fetchAll();
+
+        return $this->queryDataToMessage($stmt->fetchAll());
     }
 
-    protected function getLimit($limit){
+    public function getNewMessages($target,$lastMessage = null,$limit = null){
+        if(isset($lastMessage->id) || isset($lastMessage)){
+            return $this->getRecentMessages($target,$lastMessage->id);
+        } else {
+            return $this->getMessages($target,$limit);
+        }
+    }
+
+    protected function getLimit($limit = null){
         if(isset($limit)){
             return explode(',',$limit);
         } else {

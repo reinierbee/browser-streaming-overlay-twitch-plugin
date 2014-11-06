@@ -8,7 +8,9 @@ function ChatApi () {
 
     this.constructor = function () {
         config = {
-            target:'', // your channel name goes here
+            baseUrl: window.location.href.split('?')[0].replace("/web/index.php", "") + '/module/chat/api/v1/api.php',
+            channel:'', // your channel name goes here
+            sessionId: '',
             uriParam : {
                 Accept:'application/json'
             }
@@ -30,10 +32,20 @@ function ChatApi () {
         config.uriParam[key] = value
     };
 }
-//channels
-ChatApi.prototype.getChannels = function (callback,channel) {
+
+ChatApi.prototype.getMessages = function (callback,channel,id) {
     channel = this.getChannelName(channel);
-    url = this.getConfig().baseUrl + '/channels/' + channel + this.getUriParams();
+    url = this.getConfig().baseUrl + '/messages/' + channel;
+    if(id  !== undefined) {
+        url = url + "/" + id;
+    }
+    url = url + this.getUriParams();
+    this.restCall('GET',url,callback)
+};
+
+ChatApi.prototype.getMessagesNew = function (callback,channel) {
+    channel = this.getChannelName(channel);
+    url = this.getConfig().baseUrl + '/messages/new/' + channel + this.getUriParams();
     this.restCall('GET',url,callback)
 };
 
@@ -44,9 +56,9 @@ ChatApi.prototype.restCall = function (type,url,callback) {
             url: url,
             type: type,
             contentType: 'application/json',
-            dataType: 'jsonp',
+            dataType: 'json',
             success: function(response) { callback(response) },
-            error: function() { console.log("Failed to execute " + arguments.callee.name) }
+            error: function(xhr, textStatus, errorThrown) { console.log("Failed to execute response: " + errorThrown) }
         });
     });
 };
@@ -60,20 +72,12 @@ TwitchApi.prototype.setUriParam = function (key,value){
 };
 
 /*
- * Authenticate
+ * Stuff
  *
  */
 
-TwitchApi.prototype.getAuth = function () {
-    return '?oauth_token=' + this.getConfig().token
-};
 
-TwitchApi.prototype.appLoginRedirect = function (){
-    console.log("Redirecting to twitch auth screen");
-    window.location.replace(this.getConfig().baseUrl + '/oauth2/authorize?response_type=token&client_id='+this.getConfig().clientId+'&redirect_uri='+this.getConfig().redirectUrl+'&scope='+this.getConfig().scope);
-};
-
-TwitchApi.prototype.urlParam = function(name){
+ChatApi.prototype.urlParam = function(name){
     var results = new RegExp('[\?(&|#)]' + name + '=([^&#]*)').exec(window.location.href);
     if (results==null){
         return null;
@@ -83,11 +87,13 @@ TwitchApi.prototype.urlParam = function(name){
     }
 };
 
-TwitchApi.prototype.getUriParams = function(){
-    return this.getAuth() + this.getAdditionalUriParamsUrl()
+ChatApi.prototype.getUriParams = function(){
+    return "";
+    //return this.getAdditionalUriParamsUrl();
 };
 
-TwitchApi.prototype.getAdditionalUriParamsUrl = function(){
+
+ChatApi.prototype.getAdditionalUriParamsUrl = function(){
     uriParam = '';
     $.each(this.getConfig().uriParam, function(key, value){
         uriParam += '&' + key + '=' + value

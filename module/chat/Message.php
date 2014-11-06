@@ -14,9 +14,10 @@ class Message {
     public $client;
     public $message;
     public $target;
+    public $id;
 
     public function __construct(array $config = array())
     {
-        $this->client = new Client();
+        $this->nick = new Nick();
     }
 }

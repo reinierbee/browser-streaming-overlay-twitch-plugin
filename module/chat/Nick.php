@@ -9,9 +9,9 @@
 namespace Module\Chat;
 
 
-class Client {
+class Nick {
 
-    public $clientName;
+    public $nickname;
     public $color;
 
     public function __construct(array $config = array())
